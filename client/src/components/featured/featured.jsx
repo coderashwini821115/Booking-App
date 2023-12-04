@@ -2,7 +2,7 @@ import useFetch from "../../hooks/useFetch";
 import "./featured.css";
 
 const Featured = () => {
-  const {data, loading, error} = useFetch("http://localhost:8000/api/hotel/countByCity?cities=Jaipur,Mumbai,Chennai");
+  const {data, loading, error} = useFetch("https://booking-app-ubyc.onrender.com/api/hotel/countByCity?cities=Jaipur,Mumbai,Chennai");
   return (
     
     <div className="featured">

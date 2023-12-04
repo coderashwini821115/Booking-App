@@ -23,7 +23,7 @@ const Hotel = () => {
   const [openModal, setOpenModal] = useState(false);
   const location = useLocation();
   const path = location.pathname.split('/')[2];
-  const {data, loading, error, reFetch} = useFetch(`http://localhost:8000/api/hotel/find/${path}`);
+  const {data, loading, error, reFetch} = useFetch(`https://booking-app-ubyc.onrender.com/api/hotel/find/${path}`);
   const navigate = useNavigate();
   const {date, options} = useContext(SearchContext);
   const {user} = useContext(AuthContext);

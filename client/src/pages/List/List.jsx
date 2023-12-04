@@ -16,7 +16,7 @@ const List = () => {
   const [options, setOptions] = useState(location.state.options);
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
-  const { data, loading, error, reFetch } = useFetch(`http://localhost:8000/api/hotel?city=${destination}&min=${min || 0}&max=${max || 100000000}`);
+  const { data, loading, error, reFetch } = useFetch(`https://booking-app-ubyc.onrender.com/api/hotel?city=${destination}&min=${min || 0}&max=${max || 100000000}`);
   // console.log(location);
   const handleclick = () => {
     reFetch();
