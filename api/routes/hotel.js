@@ -46,19 +46,28 @@ router.get('/find/:id', async(req, res, next) => {
     }
 });
 //GET ALL
-router.get('/', async(req, res, next) => {
+router.get('/', async (req, res, next) => {
     console.log(req.query);
-    const {min, max, limit, ...others} = req.query;
+    const { min, max, limit, city, ...others } = req.query;
     try {
-        const hotels = await Hotel.find({
-            ...others,
-            cheapestPrice: {$gt: min|1, $lt: max || 99999999},
-    }).limit(limit);
+        let query = { ...others };
+
+        if (min !== undefined && max !== undefined) {
+            query.cheapestPrice = { $gt: parseInt(min) || 1, $lt: parseInt(max) || 99999999 };
+        }
+
+        if (city !== undefined && city.trim() !== "") {
+            query.city = city;
+        }
+
+        const hotels = await Hotel.find(query).limit(parseInt(limit) || 10);
+
         res.status(200).json(hotels);
-    } catch(e) {
+    } catch (e) {
         next(e);
     }
 });
+
 
 router.get('/countByCity', async(req, res, next) => {
     const cities = req.query.cities.split(',');

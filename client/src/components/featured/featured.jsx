@@ -1,8 +1,27 @@
+import { useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import "./featured.css";
+import { useState } from "react";
 
 const Featured = () => {
+  const navigate = useNavigate();
+  const [date, setDate] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
+
+  const [options, setOptions] = useState({
+    adult: 1,
+    children: 0,
+    room: 1,
+  });
   const {data, loading, error} = useFetch("https://booking-app-ubyc.onrender.com/api/hotel/countByCity?cities=Jaipur,Mumbai,Chennai");
+  const handleClick = (destination) => {
+    navigate("/hotels", { state: { destination, date, options } });
+  }
   return (
     
     <div className="featured">
@@ -14,7 +33,7 @@ const Featured = () => {
           alt=""
           className="featuredImg"
         />
-        <div className="featuredTitles">
+        <div className="featuredTitles" onClick={() => handleClick("Jaipur")}>
           <h1>Jaipur</h1>
           <h2>{data[0]} properties</h2>
         </div>
@@ -26,7 +45,7 @@ const Featured = () => {
           alt=""
           className="featuredImg"
         />
-        <div className="featuredTitles">
+        <div className="featuredTitles" onClick={() => handleClick("Mumbai")}>
           <h1>Mumbai</h1>
           <h2>{data[1]} properties</h2>
         </div>
@@ -37,7 +56,7 @@ const Featured = () => {
           alt=""
           className="featuredImg"
         />
-        <div className="featuredTitles">
+        <div className="featuredTitles" onClick={() => handleClick("Chennai")}>
           <h1>Chennai</h1>
           <h2>{data[2]} properties</h2>
         </div>

@@ -5,7 +5,13 @@ import {
 
 const INITIAL_STATE = {
     city: undefined,
-    date: [],
+    date: [
+        {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: "selection",
+          }
+    ],
     options: {
         adult: undefined,
         children: undefined,

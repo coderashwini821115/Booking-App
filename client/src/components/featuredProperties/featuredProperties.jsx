@@ -1,9 +1,12 @@
 import useFetch from "../../hooks/useFetch";
 import "./featuredProperties.css";
-
+import { useNavigate } from "react-router-dom";
 const FeaturedProperties = () => {
   const { data, loading, error } = useFetch("https://booking-app-ubyc.onrender.com/api/hotel?featured=true&limit=4");
-
+  const navigate = useNavigate();
+  const handleClick = (id) => {
+    navigate(`hotels/${id}`);
+  }
   return (
     <div className="fp">
       {loading ? (
@@ -11,7 +14,7 @@ const FeaturedProperties = () => {
       ) : (
         <>
           {data.map((item) => (
-            <div className="fpItem" key={item._id}>
+            <div className="fpItem" key={item._id} onClick={() => handleClick(item._id)}>
               <img
                 src={item.photos[0]}
                 alt=""
@@ -19,7 +22,7 @@ const FeaturedProperties = () => {
               />
               <span className="fpName">{item.name}</span>
               <span className="fpCity">{item.city}</span>
-              <span className="fpPrice">Starting from ${item.cheapestPrice}</span>
+              <span className="fpPrice">Starting from ₹ {item.cheapestPrice}</span>
               {item.rating && <div className="fpRating">
                 <button>{item.rating}</button>
                 <span>Excellent</span>

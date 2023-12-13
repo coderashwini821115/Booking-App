@@ -2,11 +2,12 @@ import "./list.css";
 import Navbar from "../../components/navbar/navbar.jsx";
 import Header from "../../components/header/Header.jsx";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/searchItem.jsx";
 import useFetch from "../../hooks/useFetch.js";
+import { SearchContext } from "../../context/SearchContext.jsx";
 
 const List = () => {
   const location = useLocation();
@@ -17,8 +18,16 @@ const List = () => {
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
   const { data, loading, error, reFetch } = useFetch(`https://booking-app-ubyc.onrender.com/api/hotel?city=${destination}&min=${min || 0}&max=${max || 100000000}`);
-  // console.log(location);
+  console.log(location);
+  console.log("coming from feature ", location.state.destination);
+  const {dispatch} = useContext(SearchContext);
+  // const handleSearch = () => {
+  //   // console.log("fired");
+  //   dispatch({type: "NEW_SEARCH", payload: {destination, date, options}})
+  //   navigate("/hotels", { state: { destination, date, options } });
+  // };
   const handleclick = () => {
+    dispatch({type: "NEW_SEARCH", payload: {destination, date, options}})
     reFetch();
   }
   return (
